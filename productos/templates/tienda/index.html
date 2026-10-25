@@ -1,0 +1,139 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalle de ventas | Motos Lujo</title>
+
+    <link rel="stylesheet" href="{% static 'productos/css/estilos.css' %}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="{% url 'inicio' %}" class="logo">
+        🏍️ MOTOS <span>LUJO</span>
+    </a>
+
+    <nav>
+        <a href="{% url 'inicio' %}">Inicio</a>
+        <a href="{% url 'lista_productos' %}">Productos</a>
+        <a href="{% url 'lista_categorias' %}">Categorías</a>
+        <a href="{% url 'lista_clientes' %}">Clientes</a>
+        <a href="{% url 'lista_venta' %}">Ventas</a>
+        <a href="{% url 'lista_detalle_ventas' %}" class="seleccionado">
+            Detalle de venta
+        </a>
+    </nav>
+</header>
+
+<section class="portada">
+    <div class="texto-portada">
+        <p class="marca">MOTOS LUJO</p>
+        <h1>Detalle de ventas</h1>
+        <p>
+            Consulta los productos vendidos, los clientes
+            y los precios de cada venta registrada.
+        </p>
+        <a href="#detalles" class="boton">Ver detalles</a>
+    </div>
+</section>
+
+<main class="contenido" id="detalles">
+
+    <div class="titulo-seccion">
+        <div>
+            <h2>Registro de ventas</h2>
+            <p>Información de los productos incluidos en cada venta.</p>
+        </div>
+
+        <a href="{% url 'lista_venta' %}" class="boton-volver">
+            Volver a ventas
+        </a>
+    </div>
+
+    <div class="imagen-secundaria">
+        <img
+            src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80"
+            alt="Motocicleta en exhibición">
+
+        <div>
+            <h3>Pasión por las motocicletas</h3>
+            <p>
+                En Motos Lujo llevamos el control de cada venta
+                para ofrecer una mejor atención a nuestros clientes.
+            </p>
+        </div>
+    </div>
+
+    <section class="tabla-contenedor">
+        <h3>Detalles registrados</h3>
+
+        <div class="tabla-scroll">
+            <table class="tabla-ventas">
+                <thead>
+                    <tr>
+                        <th>Venta</th>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for detalle in lista %}
+                    <tr>
+                        <td>#{{ detalle.venta.id }}</td>
+
+                        <td>
+                            {{ detalle.venta.cliente.nombre }}
+                            {{ detalle.venta.cliente.apellido }}
+                        </td>
+
+                        <td>{{ detalle.producto.nombre }}</td>
+
+                        <td>{{ detalle.cantidad }}</td>
+
+                        <td class="precio">
+                            ${{ detalle.precio_unitario|floatformat:2 }}
+                        </td>
+
+                        <td class="subtotal">
+                            ${{ detalle.subtotal|floatformat:2 }}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="sin-datos">
+                            Todavía no hay detalles de ventas registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <a href="{% url 'inicio' %}" class="logo">
+        MOTOS <span>LUJO</span>
+    </a>
+
+    <p>Pasión por las motos. Compromiso con la calidad.</p>
+
+    <p class="copyright">
+        © 2026 Tienda Motos Lujo. Todos los derechos reservados.
+    </p>
+</footer>
+
+</body>
+</html>
